@@ -1,6 +1,7 @@
 import React from 'react';
+import Keyboard from 'react-simple-keyboard';
+import 'react-simple-keyboard/build/css/index.css';
 import {Connection} from "../connector/Connection";
-import './style.css';
 import {Query} from "../connector/Query";
 
 interface KeyboardContainerProps {
@@ -8,7 +9,9 @@ interface KeyboardContainerProps {
 }
 
 interface KeyboardContainerState {
-  input: string
+  input: string; 
+  layout: 'default' | 'shift';
+  previous: string | null;
 }
 
 export class Container extends React.Component<KeyboardContainerProps, KeyboardContainerState> {
@@ -17,7 +20,9 @@ export class Container extends React.Component<KeyboardContainerProps, KeyboardC
   constructor(props: KeyboardContainerProps) {
     super(props);
     this.state = {
-      input: ''
+      input: '', 
+      layout: 'default',
+      previous: null
     };
 
     this.query = new Query(props.connection);
@@ -32,12 +37,47 @@ export class Container extends React.Component<KeyboardContainerProps, KeyboardC
     }
   };
 
-  render() {
+  onChange = (input: string) => {
+    //console.log("Input changed", input);
+  }
+
+  onKeyPress = (button:string) => {
+    if (button === '{lock}') {
+      this.setState({ layout: this.state.layout === 'default' ? 'shift' : 'default' });
+    }
+    
+    this.query.input(button);
+
+    this.setState({ previous: button });
+  }
+
+  render(){
     return (
-        <div id={"keyboardControll"}>
-          <textarea onChange={e => { this.setState({ input: e.target.value }) }} value={this.state.input}></textarea>
-          <button onClick={this.click} onTouchStart={this.click}>Send</button>
-        </div>
+      <Keyboard
+        onChange={this.onChange}
+        onKeyPress={this.onKeyPress}
+        autoUseTouchEvents={true}
+        layout={
+          {
+            'default': [
+              '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
+              '{tab} q w e r t y u i o p [ ] \\',
+              '{lock} a s d f g h j k l ; \' {enter}',
+              '{shift} z x c v b n m , . / {shift}',
+              '{space}'
+            ],
+            'shift': [
+              '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
+              '{tab} Q W E R T Y U I O P { } |',
+              '{lock} A S D F G H J K L : " {enter}',
+              '{shift} Z X C V B N M < > ? {shift}',
+              '{space}'
+            ]
+          }
+        }
+        layoutName={this.state.layout}
+        maxLength={1}
+      />
     );
   }
 }

@@ -1,3 +1,4 @@
+import { ServerResponseMouse } from "../../server/server.interfaces";
 import {Connection} from "./Connection";
 
 export class Query {
@@ -28,8 +29,15 @@ export class Query {
     this.currentConnection.send({
       command: 'keyboard_input',
       data: {
-        input: message
+        message: message
       }
+    });
+  }
+
+  public mouseInfo(): void {
+    this.currentConnection.send({
+      command: 'mouse_info',
+      data: null
     });
   }
 }

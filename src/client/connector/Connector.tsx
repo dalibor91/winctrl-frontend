@@ -20,7 +20,7 @@ export class Connector extends React.Component<ConnectorProps, ConnectorState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      urlConnection: '',
+      urlConnection: 'ws://localhost:8181',
       connected: false,
       error: null
     };

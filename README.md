@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Windows controll 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+It holds frontend for control of the windows machine from you phone, cursor and input. 
+
+![how it looks on phone](https://i.imgur.com/lLTecTF.jpg)
 
 ## Available Scripts
 

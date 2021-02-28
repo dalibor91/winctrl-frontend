@@ -1,13 +1,42 @@
 
+
+@media only screen and (min-width: 500px) {
+  .cursorContainer {
+    height: 500px;
+    width: 500px;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .cursorContainer {
+    height: 250px;
+    width: 250px;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 400px) {
+  .cursorContainer {
+    height: 300px;
+    width: 300px;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 500px) {
+  .cursorContainer {
+    height: 400px;
+    width: 400px;
+  }
+}
+
 #cursorMovementControl {
   overflow: hidden;
   max-width: 500px;
-
+  margin: 0 auto;
 }
 
 .cursorContainer {
   position: relative;
-  height: 500px;
+  max-height: 500px;
   transform: rotate(45deg);
 }
 
@@ -16,6 +45,7 @@
   float: left;
   width: 50%;
   height: 50%;
+  position: relative;
 }
 
 .cursorContainer > .optionSide > img {
@@ -24,35 +54,28 @@
   margin: 18% auto;
 }
 
-.cursorContainer .optionSide.topLeft {
-  /*//background: red;*/
+.cursorContainer .optionSide > .imageHover {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  top: 15%;
+  left: 15%;
+  z-index: 50;
 }
 
-.cursorContainer .optionSide.topLeft img {
+.cursorContainer .optionSide.topLeft > .imageHover {
   transform: rotate(-45deg);
 }
 
-.cursorContainer .optionSide.topRight {
-  /*//background: blue;*/
-}
-
-.cursorContainer .optionSide.topRight img {
+.cursorContainer .optionSide.topRight > .imageHover {
   transform: rotate(45deg);
 }
 
-.cursorContainer .optionSide.bottomLeft {
-  /*//background: aqua;*/
-}
-
-.cursorContainer .optionSide.bottomLeft img {
+.cursorContainer .optionSide.bottomLeft  > .imageHover {
   transform: rotate(-135deg);
 }
 
-.cursorContainer .optionSide.bottomRight {
-  /*//background: burlywood;*/
-}
-
-.cursorContainer .optionSide.bottomRight img {
+.cursorContainer .optionSide.bottomRight > .imageHover {
   transform: rotate(135deg);
 }
 
@@ -61,14 +84,13 @@
   height: 50%;
   background: azure;
   position: absolute;
-  top: 20%;
-  right: 24%;
+  top: 25%;
+  right: 25%;
   border-radius: 50%;
-  transform: rotate(
-          -45deg
-  );
+  transform: rotate(-45deg);
   border: 1px solid #009688;
   overflow: hidden;
+  z-index: 100;
 }
 
 .cursorContainer .center .clickDiv {
@@ -88,3 +110,4 @@
 .cursorContainer .center .clickDiv.rightClick {
   /*//background: red;*/
 }
+

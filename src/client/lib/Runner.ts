@@ -1,17 +1,25 @@
 export class Runner {
-  protected interval: NodeJS.Timeout | null;
+  protected interval: NodeJS.Timeout | null = null;
+  protected cleanup: NodeJS.Timeout | null = null;
 
   protected modifierCallback: (state: object) => object;
 
   constructor(protected _state: object, protected timeout: number = 200) {
-    this.interval = null;
     this.modifierCallback = (object) => object ;
   }
 
   start() {
+    if (this.cleanup) {
+      clearTimeout(this.cleanup);
+    }
+
     this.interval = setInterval(() => {
       this._state = this.modifierCallback(this._state);
     }, this.timeout);
+
+    this.cleanup = setTimeout(() => {
+      this.end();
+    }, 10000)
   }
 
   end() {
@@ -26,5 +34,9 @@ export class Runner {
 
   get state(): object {
     return this._state;
+  }
+
+  set state(state: object) {
+    this._state = state;
   }
 }

@@ -5,12 +5,18 @@ type MessageCallback = (ev: ServerResponse) => void;
 export class Connection {
   protected callbacks: MessageCallback[] = [];
 
+  public lastResponse?: ServerResponse;
+
   constructor(protected readonly ws: WebSocket) {
     this.ws.onmessage = async (ev: MessageEvent) => {
       const data = typeof ev.data === 'string' ? ev.data : await ev.data.text(); //await ev.data.text();
-      //console.log(ev.data);
+
+      this.lastResponse = JSON.parse(data);
+
       this.callbacks.map(clbk => {
-        clbk(JSON.parse(data));
+        if (this.lastResponse) {
+          clbk(this.lastResponse);
+        }
       });
     };
   }
@@ -20,7 +26,9 @@ export class Connection {
   }
 
   send(object: ServerMessage) {
-    this.ws.send(JSON.stringify(object))
+    if (this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(object))
+    }
   }
 
   onMessage(clbck: MessageCallback) {
