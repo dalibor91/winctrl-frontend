@@ -1,0 +1,90 @@
+
+#cursorMovementControl {
+  overflow: hidden;
+  max-width: 500px;
+
+}
+
+.cursorContainer {
+  position: relative;
+  height: 500px;
+  transform: rotate(45deg);
+}
+
+.cursorContainer > .optionSide {
+  display: inline-block;
+  float: left;
+  width: 50%;
+  height: 50%;
+}
+
+.cursorContainer > .optionSide > img {
+  display: block;
+  width: 50%;
+  margin: 18% auto;
+}
+
+.cursorContainer .optionSide.topLeft {
+  /*//background: red;*/
+}
+
+.cursorContainer .optionSide.topLeft img {
+  transform: rotate(-45deg);
+}
+
+.cursorContainer .optionSide.topRight {
+  /*//background: blue;*/
+}
+
+.cursorContainer .optionSide.topRight img {
+  transform: rotate(45deg);
+}
+
+.cursorContainer .optionSide.bottomLeft {
+  /*//background: aqua;*/
+}
+
+.cursorContainer .optionSide.bottomLeft img {
+  transform: rotate(-135deg);
+}
+
+.cursorContainer .optionSide.bottomRight {
+  /*//background: burlywood;*/
+}
+
+.cursorContainer .optionSide.bottomRight img {
+  transform: rotate(135deg);
+}
+
+.cursorContainer .center {
+  width: 50%;
+  height: 50%;
+  background: azure;
+  position: absolute;
+  top: 20%;
+  right: 24%;
+  border-radius: 50%;
+  transform: rotate(
+          -45deg
+  );
+  border: 1px solid #009688;
+  overflow: hidden;
+}
+
+.cursorContainer .center .clickDiv {
+  width: 33%;
+  height: 100%;
+  float: left;
+}
+
+.cursorContainer .center .clickDiv.leftClick {
+  background: #d2efec;
+}
+
+.cursorContainer .center .clickDiv.doubleLeftClick {
+  /*//background: red;*/
+}
+
+.cursorContainer .center .clickDiv.rightClick {
+  /*//background: red;*/
+}
