@@ -3,8 +3,10 @@ import {get} from 'lodash';
 import {Connection} from "./Connection";
 import './style.css';
 
+
 interface ConnectorProps {
-  onConnection(socket: Connection): JSX.Element ;
+  afterConnection(socket: Connection): JSX.Element ;
+  beforeConnection(): JSX.Element ;
   onError?(): void;
 }
 
@@ -15,12 +17,19 @@ interface ConnectorState {
   error: string | null;
 }
 
+const readConnectionFromStorage = () => {
+  return localStorage.getItem('connectionUrl');
+}
+
+const writeConnectionToStorage = (url: string) => {
+  localStorage.setItem('connectionUrl', url)
+};
 
 export class Connector extends React.Component<ConnectorProps, ConnectorState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      urlConnection: 'ws://localhost:8181',
+      urlConnection: '',
       connected: false,
       error: null
     };
@@ -40,55 +49,63 @@ export class Connector extends React.Component<ConnectorProps, ConnectorState> {
       return;
     }
 
-    const ws = new WebSocket(urlConnection);
+    const connection = new Connection(new WebSocket(urlConnection));
 
-    ws.onopen = (ev: Event): void => {
-      if (ws.readyState === WebSocket.OPEN) {
-        const connection = new Connection(ws);
+    console.log(connection);
 
-        connection.onMessage(msg => {
-          if (msg.error) {
-            this.setState({ error: JSON.stringify(msg) })
-          } else {
-            this.setState({ error: null })
-          }
-        });
-        this.setState({ connected: true, connection, error: null });
+    connection.onMessage(msg => {
+      if (msg.error) {
+        this.setState({ error: JSON.stringify(msg) })
+      } else {
+        this.setState({ error: null })
       }
+    });
+
+    connection.onSocketOpen = (): void => {
+      this.setState({ connected: true, connection, error: null });
     };
 
-    ws.onerror = (ev: Event): void => {
+    connection.onSocketError = (ev: Event): void => {
       this.setState({error: 'Unable to connect check console'})
-      console.log(ev);
-    }
+    };
+
+    this.setState({
+      connection
+    });
+
+    connection.connect();
+    writeConnectionToStorage(urlConnection);
   };
 
-  tryDisconnect = () => {
-    this.state.connection && this.state.connection.close();
+  componentDidMount() {
+    const urlConnection = readConnectionFromStorage() || '';
     this.setState({
-      connection: undefined, connected: false
+      urlConnection
     });
-  };
+  }
 
   renderConnection() {
     const {connected, error} = this.state;
 
     return (
         <div className={"connectionSettings"}>
-          <input type={"text"} onChange={this.onConnectUrlChange} disabled={connected}/>
+          {!connected && <input type={"text"} onChange={this.onConnectUrlChange} disabled={connected} value={this.state.urlConnection}/>}
           {error && (<div className={"error"}><strong>Error: </strong>{error}</div>)}
-          {!connected ? (<button onClick={this.tryConnect}>Connect</button>) : (<button onClick={this.tryDisconnect}>Disconnect</button>)}
+          {!connected && (<button onClick={this.tryConnect}>Connect</button>)}
         </div>
     );
   }
 
   render() {
+    const { connected, connection } = this.state;
     return (
         <div>
           <div id={"connectionInput"}>{this.renderConnection()}</div>
-          {this.state.connected && this.state.connection && (
-              <div className={"connectionSuccess"}>{this.props.onConnection(this.state.connection)}</div>
+          {connected && connection && (
+              <div className={"connectionSuccess"}>{this.props.afterConnection(connection)}</div>
           )}
+
+          {!connected && this.props.beforeConnection()}
         </div>
     );
   }

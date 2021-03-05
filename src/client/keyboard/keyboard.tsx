@@ -1,8 +1,11 @@
 import React from 'react';
-import Keyboard from 'react-simple-keyboard';
-import 'react-simple-keyboard/build/css/index.css';
+import SimpleReactKeyboard from 'react-simple-keyboard';
+
 import {Connection} from "../connector/Connection";
 import {Query} from "../connector/Query";
+
+import 'react-simple-keyboard/build/css/index.css';
+
 
 interface KeyboardContainerProps {
   connection: Connection
@@ -14,7 +17,7 @@ interface KeyboardContainerState {
   previous: string | null;
 }
 
-export class Container extends React.Component<KeyboardContainerProps, KeyboardContainerState> {
+export class Keyboard extends React.Component<KeyboardContainerProps, KeyboardContainerState> {
   protected readonly query: Query;
 
   constructor(props: KeyboardContainerProps) {
@@ -53,7 +56,7 @@ export class Container extends React.Component<KeyboardContainerProps, KeyboardC
 
   render(){
     return (
-      <Keyboard
+      <SimpleReactKeyboard
         onChange={this.onChange}
         onKeyPress={this.onKeyPress}
         autoUseTouchEvents={true}

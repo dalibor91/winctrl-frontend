@@ -14,10 +14,9 @@
     "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-joystick-component": "^1.4.0",
     "react-scripts": "4.0.3",
     "react-simple-keyboard": "^2.5.160",
-    "react-spring": "^8.0.27",
-    "react-use-gesture": "^9.0.4",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
     "ws": "^7.4.3"

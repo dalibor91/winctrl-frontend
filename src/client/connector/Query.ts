@@ -6,17 +6,18 @@ export class Query {
 
   }
 
-  public moveMouse(cursorX: number, cursorY: number) {
+  public moveMouse(cursorX: number, cursorY: number, type: 'absolute_mouse_move' | 'relative_mouse_move' = 'absolute_mouse_move') {
     this.currentConnection.send({
       command: 'mouse_move',
       data: {
+        type,
         cursorX,
         cursorY
       }
     });
   }
 
-  public click(type: 'left' | 'right' | 'double_left') {
+  public click(type: string) {
     this.currentConnection.send({
       command: 'mouse_click',
       data: {

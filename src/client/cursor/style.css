@@ -1,113 +1,75 @@
 
-
-@media only screen and (min-width: 500px) {
-  .cursorContainer {
-    height: 500px;
-    width: 500px;
-  }
-}
-
-@media only screen and (max-width: 300px) {
-  .cursorContainer {
-    height: 250px;
-    width: 250px;
-  }
-}
-
-@media (min-width: 300px) and (max-width: 400px) {
-  .cursorContainer {
-    height: 300px;
-    width: 300px;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 500px) {
-  .cursorContainer {
-    height: 400px;
-    width: 400px;
-  }
-}
-
 #cursorMovementControl {
   overflow: hidden;
   max-width: 500px;
   margin: 0 auto;
+  padding: 5px;
 }
 
-.cursorContainer {
-  position: relative;
-  max-height: 500px;
-  transform: rotate(45deg);
+#cursorJoystick > div {
+  margin: 0 auto;
 }
 
-.cursorContainer > .optionSide {
+
+#clickArea > .clickSpace {
+  padding: 30px;
+  background-color: #eee;
+  margin: 10px;
+  width: 25%;
   display: inline-block;
+  background-size: 100% 70%;
+  background-repeat: no-repeat;
+  background-position-y: 12px;
+}
+
+#clickArea .clickSpace:first-child {
   float: left;
-  width: 50%;
-  height: 50%;
-  position: relative;
 }
 
-.cursorContainer > .optionSide > img {
-  display: block;
-  width: 50%;
-  margin: 18% auto;
+#clickArea .clickSpace:last-child {
+  float: right;
 }
 
-.cursorContainer .optionSide > .imageHover {
-  position: absolute;
-  width: 70%;
-  height: 70%;
-  top: 15%;
-  left: 15%;
-  z-index: 50;
+#clickArea {
+  margin-top: 10%;
+  margin-bottom: 3%;
+  height: 80px;
 }
 
-.cursorContainer .optionSide.topLeft > .imageHover {
-  transform: rotate(-45deg);
+#navArea {
+  margin-bottom: 40px;
+  height: 40px;
 }
 
-.cursorContainer .optionSide.topRight > .imageHover {
-  transform: rotate(45deg);
-}
-
-.cursorContainer .optionSide.bottomLeft  > .imageHover {
-  transform: rotate(-135deg);
-}
-
-.cursorContainer .optionSide.bottomRight > .imageHover {
-  transform: rotate(135deg);
-}
-
-.cursorContainer .center {
-  width: 50%;
-  height: 50%;
-  background: azure;
-  position: absolute;
-  top: 25%;
-  right: 25%;
-  border-radius: 50%;
-  transform: rotate(-45deg);
-  border: 1px solid #009688;
+#navArea .side {
+  float: left;
+  width: 20%;
+  height: 70px;
+  background-color: #eee;
+  margin: 2%;
   overflow: hidden;
-  z-index: 100;
 }
 
-.cursorContainer .center .clickDiv {
-  width: 33%;
-  height: 100%;
-  float: left;
+#navArea .side > div {
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  width: 100%;
+  height: 70px;
 }
 
-.cursorContainer .center .clickDiv.leftClick {
-  background: #d2efec;
+#navArea .side:nth-child(1) > div {
+  transform: rotate(180deg);
 }
 
-.cursorContainer .center .clickDiv.doubleLeftClick {
-  /*//background: red;*/
+#navArea .side:nth-child(2) > div {
+  transform: rotate(270deg);
 }
 
-.cursorContainer .center .clickDiv.rightClick {
-  /*//background: red;*/
+#navArea .side:nth-child(4) > div {
+  transform: rotate(90deg);
 }
 
+#navArea .side:first-child {
+  margin-left: 4%;
+}
