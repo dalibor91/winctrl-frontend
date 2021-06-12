@@ -6,7 +6,7 @@ export interface ServerMessage {
 
 export interface ServerResponse {
   error: string | null;
-  response: object | null;
+  result: object | null;
   success: boolean
 }
 
@@ -20,7 +20,7 @@ export interface ServerMessageMouse extends ServerMessage {
 }
 
 export interface ServerResponseMouse extends ServerResponse {
-  response: {
+  result: {
     cursorX: number,
     cursorY: number,
     screenWidth: number,

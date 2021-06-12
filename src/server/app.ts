@@ -19,29 +19,31 @@ wss.on('connection', (ws: WebSocket) => {
 
     const parsedMessage = JSON.parse(message) as ServerMessage;
 
+    console.log(`Request ${message}`);
+
     if (parsedMessage) {
 
       let response: ServerResponse = {
         error: 'Unknown command',
         success: false,
-        response: null
+        result: null
       };
 
       switch (parsedMessage.command) {
         case 'mouse_move':
         case 'mouse_info':
           response = {
-            error: null, success: true, response: {
-              cursorX: get(parsedMessage.data, 'cursorX', 0),
-              cursorY: get(parsedMessage.data, 'cursorY', 0),
+            error: null, success: true, result: {
+              cursorX: get(parsedMessage.data, 'cursorX', 1000),
+              cursorY: get(parsedMessage.data, 'cursorY', 1000),
               screenWidth: 100,
-              screenHeight: 100
+              screenHeight: 100 
             }
           };
           break;
         case 'mouse_click':
           response = {
-            error: null, success: true, response: {
+            error: null, success: true, result: {
               clicked: get(parsedMessage.data, 'type')
             }
           };
@@ -49,12 +51,14 @@ wss.on('connection', (ws: WebSocket) => {
 
         case 'keyboard_input':
           response = {
-            error: null, success: true, response: {
+            error: null, success: true, result: {
               input: get(parsedMessage.data, 'input')
             }
           };
           break;
       }
+
+      console.log(`Response: ${JSON.stringify(response)}`)
 
       ws.send(Buffer.from(JSON.stringify(response)));
     }

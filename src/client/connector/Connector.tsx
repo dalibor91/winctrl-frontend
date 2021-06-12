@@ -51,8 +51,6 @@ export class Connector extends React.Component<ConnectorProps, ConnectorState> {
 
     const connection = new Connection(new WebSocket(urlConnection));
 
-    console.log(connection);
-
     connection.onMessage(msg => {
       if (msg.error) {
         this.setState({ error: JSON.stringify(msg) })
